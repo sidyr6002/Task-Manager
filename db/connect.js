@@ -10,7 +10,6 @@ const dbName = process.env.DB_NAME;
 
 const connectionURL = `mongodb+srv://${username}:${password}@${cluster}.gqlxpoh.mongodb.net/${dbName}?retryWrites=true&w=majority`;
 
-
 const connectDB = () => {
   return mongoose.connect(connectionURL, {
         useNewUrlParser: true,
@@ -18,7 +17,7 @@ const connectDB = () => {
       });
 };
 
-module.exports = { connectDB };
+module.exports = connectDB;
 
 // mongoose
 //   .connect(connectURL, {
