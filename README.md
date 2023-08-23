@@ -12,43 +12,43 @@ The Task Manager Node.js Application is a simple yet powerful task management sy
 ## Installation
 
 1. **Clone the Repository:** 
-- Open your terminal.
-- Clone this repository to your local machine by executing the following command:
+    - Open your terminal.
+    - Clone this repository to your local machine by executing the following command:
 
 ```bash
-    git clone https://github.com/sidyr6002/Task-Manager.git
+        git clone https://github.com/sidyr6002/Task-Manager.git
 ```
 2. **Navigate to the Project Directory:**
-- In the terminal, change your current working directory to the project directory:
+    - In the terminal, change your current working directory to the project directory:
 
 ```bash
-    cd Task-Manager
+        cd Task-Manager
 ```
 
 3. **Install Dependencies:** 
-- Install the required Node.js packages by running:
+    - Install the required Node.js packages by running:
 
 ```bash
-    npm install
+        npm install
 ``` 
 4. **Setup MongoDB:** 
-- Ensure you have a MongoDB instance running locally or provide a remote MongoDB URL in the configuration.
+    - Ensure you have a MongoDB instance running locally or provide a remote MongoDB URL in the configuration.
 
 5. **Configuration:** 
-- Create a `.env` file in the root directory.
-- Open the `.env` file and provide your MongoDB details as follows:
+    - Create a `.env` file in the root directory.
+    - Open the `.env` file and provide your MongoDB details as follows:
 
 ```plaintext
-    USER_NAME=your_mongodb_username
-    PASSWORD=your_mongodb_password
-    CLUSTER=your_mongodb_clustername
-    DB_NAME=your_mongodb_databasename
+        USER_NAME=your_mongodb_username
+        PASSWORD=your_mongodb_password
+        CLUSTER=your_mongodb_clustername
+        DB_NAME=your_mongodb_databasename
 ```
 
 6. **Run the application:** 
-- Start the application by executing the following command:
+    - Start the application by executing the following command:
 ```bash
-    npm start
+        npm start
 ```
 
 ## Usage
