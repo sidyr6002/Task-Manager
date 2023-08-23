@@ -1,8 +1,33 @@
 const mongoose = require("mongoose");
+const dotenv = require('dotenv');
 
-const connectString = `mongodb+srv://luffy:zxcvlkj@cluster0.gqlxpoh.mongodb.net/Task-Manager?retryWrites=true&w=majority`;
+dotenv.config(); // Load environment variables from .env file
 
-mongoose
-    .connect(connectString)
-    .then(() => console.log("Successfully connected to the DB"))
-    .catch((error) => console.log(error));
+const username = process.env.USER_NAME;
+const password = process.env.PASSWORD;
+const cluster = process.env.CLUSTER;
+const dbName = process.env.DB_NAME;
+
+const connectionURL = `mongodb+srv://${username}:${password}@${cluster}.gqlxpoh.mongodb.net/${dbName}?retryWrites=true&w=majority`;
+
+
+const connectDB = () => {
+  return mongoose.connect(connectionURL, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+      });
+};
+
+module.exports = { connectDB };
+
+// mongoose
+//   .connect(connectURL, {
+//     useNewUrlParser: true,
+//     useUnifiedTopology: true,
+//   })
+//   .then(() => {
+//     console.log("Conneted to DB");
+//   })
+//   .catch((error) => {
+//     console.log(error);
+//   });
