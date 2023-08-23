@@ -1,88 +1,74 @@
 const Task = require("../models/Task");
+const mongoose = require("mongoose");
+
+const isValidObjectId = (id) => {
+    return mongoose.isValidObjectId(id);
+};
+
+const handleServerError = (res, error) => {
+    //console.error("An error occurred:", error);
+    res.status(500).json({
+        success: false,
+        message: "Internal server error",
+        error: error.message,
+    });
+};
 
 const getAllTasks = async (req, res) => {
     try {
-        await Task.find()
-            .then((allTasks) => {
-                res.status(200).json({
-                    success: true,
-                    allTasks,
-                });
-            })
-            .catch((error) => {
-                res.status(404).json({
-                    success: false,
-                    message: "Can't find tasks, " + error,
-                });
-            });
-    } catch (error) {
-        res.status(500).json({
-            success: false,
-            message: "Internal server error",
-            error: error.message,
+        const tasks = await Task.find();
+
+        return res.status(200).json({
+            tasks,
         });
+    } catch (error) {
+        handleServerError(res, error);
     }
 };
 
 const createTask = async (req, res) => {
     try {
         const taskData = req.body;
+        const task = await Task.create(taskData);
 
-        await Task.create(taskData)
-            .then((createdTask) => {
-                if (!createdTask) {
-                    return res.status(404).json({
-                        success: false,
-                        message: "Task creation failed",
-                        error: "Unable get created task",
-                    });
-                }
+        if (!task) {
+            throw new Error("Task creation failed");
+        }
 
-                res.status(201).json({
-                    success: true,
-                    createdTask,
-                });
-            })
-            .catch((error) => {
-                res.status(404).json({
-                    success: false,
-                    error: error.message,
-                });
-            });
-    } catch (error) {
-        res.status(500).json({
-            success: false,
-            message: "Internal server error",
-            error: error.message,
+        res.status(201).json({
+            task,
         });
+    } catch (error) {
+        handleServerError(res, error);
     }
 };
 
 const getTask = async (req, res) => {
     try {
         const id = req.params.id;
-        
-        await Task.findById(id)
-            .then((task)=>{
-                res.status(200).json({
-                    success: true,
-                    task,
-                });
-            })
-            .catch((error) => {
-                res.status(404).json({
-                    success: false,
-                    message: "Can't find the task, " + error,
-                });
+
+        if (!isValidObjectId(id)) {
+            return res.status(400).json({
+                success: false,
+                message: "Invalid task ID",
             });
-    } catch (error) {
-        res.status(500).json({
-            success: false,
-            message: "Internal server error",
-            error: error.message,
+        }
+
+        const task = await Task.findById(id);
+
+        if (!task) {
+            return res.status(404).json({
+                success: false,
+                message: "Task not found",
+            });
+        }
+
+        res.status(200).json({
+            task,
         });
+    } catch (error) {
+        handleServerError(res, error);
     }
-    
 };
 
 const updateTask = async (req, res) => {
@@ -90,34 +76,23 @@ const updateTask = async (req, res) => {
         const itemId = req.params.id;
         const updateData = req.body;
 
-        await Task.findByIdAndUpdate(itemId, updateData, { new: true })
-            .then((updatedTask) => {
-                if (!updatedTask) {
-                    return res.status(404).json({
-                        success: false,
-                        message: "Item not found",
-                    });
-                }
-
-                res.status(200).json({
-                    success: true,
-                    updatedTask,
-                });
-            })
-            .catch((error) => {
-                res.status(404).json({
-                    success: false,
-                    error: error.message,
-                });
-            });
-        
-    } catch (error) {
-        console.log(error);
-        res.status(500).json({
-            success: false,
-            message: "Internal server error",
-            error: error.message,
+        const task = await Task.findByIdAndUpdate(itemId, updateData, {
+            new: true,
+            runValidators: true,
         });
+
+        if (!task) {
+            return res.status(404).json({
+                success: false,
+                message: "Task not found",
+            });
+        }
+
+        return res.status(200).json({
+            task,
+        });
+    } catch (error) {
+        handleServerError(res, error);
     }
 };
 
@@ -125,25 +100,20 @@ const deleteTask = async (req, res) => {
     try {
         const id = req.params.id;
 
-        await Task.findByIdAndDelete(id)
-            .then((task) => {
-                res.status(200).json({
-                    success: true,
-                    task,
-                });
-            })
-            .catch((error) => {
-                res.status(404).json({
-                    success: false,
-                    message: "Can't find the task, " + error,
-                });
+        const task = await Task.findByIdAndDelete(id);
+
+        if (!task) {
+            return res.status(404).json({
+                success: false,
+                message: "Task not found",
             });
-    } catch (error) {
-        res.status(500).json({
-            success: false,
-            message: "Internal server error",
-            error: error.message,
+        }
+
+        return res.status(200).json({
+            task,
         });
+    } catch (error) {
+        handleServerError(res, error);
     }
 };
 

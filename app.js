@@ -4,6 +4,7 @@ const tasks = require(`./routes/tasks`);
 const { connectDB } = require(`./db/connect`);
 
 // ------------------- MIDDLEWARE ----------------------------
+app.use(express.static(`./public`))
 app.use(express.json());
 
 // ------------------ IP and PORT ----------------------------
@@ -11,11 +12,11 @@ const hostAdd = process.env.HOST_ADDRESS;
 const port = process.env.PORT;
 
 // ----------------------- API -------------------------------
-app.get("/", (req, res) => {
-    res.end(`Hello Rahul`);
-});
+// app.get("/", (req, res) => {
+//     res.end(`Hello Rahul`);
+// });
 
-app.use(`/api/v1/tasks`, tasks);
+app.use(`/api/v1/tasks/`, tasks);
 
 // ---------------------- CONNECT TO DB ----------------------
 const start = async () => {
