@@ -56,10 +56,10 @@ The Task Manager Node.js Application is a simple yet powerful task management sy
 The application provides a simple API that you can interact with using tools like `curl` or Postman. Below are the available API endpoints:
 
 - **GET /tasks:** Get a list of all tasks.
-- **GET /tasks/:id:** Get details about a specific task by providing its ID.
+- **GET /tasks/\:id:** Get details about a specific task by providing its ID.
 - **POST /tasks:** Create a new task. Provide JSON data with title, description, and due date.
-- **PATCH /tasks/:id:** Update task details. Provide JSON data with fields you want to update.
-- **DELETE /tasks/:id:** Delete a task by providing its ID.
+- **PATCH /tasks/\:id:** Update task details. Provide JSON data with fields you want to update.
+- **DELETE /tasks/\:id:** Delete a task by providing its ID.
 
 Make sure to replace `:id` with the actual ID of the task you want to interact with.
 
