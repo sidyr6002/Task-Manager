@@ -4,7 +4,7 @@ The Task Manager Node.js Application is a simple yet powerful task management sy
 
 ## Features
 
-- **Create:** Effortlessly craft new tasks, specifying essential attributes such as title, description, and due date.
+- **Create:** Effortlessly craft new tasks, specifying essential attributes such as title and completed check box.
 - **Read:** Seamlessly access an organized list of all tasks, aiding in better task tracking.
 - **Update:** Modify task details and statuses as your projects evolve.
 - **Delete:** Easily remove tasks that are no longer relevant, maintaining a clutter-free task list.
